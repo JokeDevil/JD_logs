@@ -38,9 +38,8 @@ Config.webhooks = {
 	resources = "DISCORD_WEBHOOK",
 
   -- How you add more logs is explained on https://docs.jokedevil.com/JD_logs
-  }
+}
 
 
  --Debug shizzels :D
 Config.debug = false
-Config.versionCheck = "1.1.0"

@@ -239,7 +239,7 @@ end
 Citizen.CreateThread(
 	function()
 		local vRaw = LoadResourceFile(GetCurrentResourceName(), 'version.json')
-		if vRaw and Config.versionCheck then
+		if vRaw then
 			local v = json.decode(vRaw)
 			PerformHttpRequest(
 				'https://raw.githubusercontent.com/JokeDevil/JD_logs/master/version.json',
