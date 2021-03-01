@@ -5,6 +5,7 @@ url 'https://jokedevil.com'
 
 -- Config
 server_script 'config.lua'
+server_script 'server_config.lua'
 client_script 'config.lua'
 
 -- Server Scripts
