@@ -1,6 +1,6 @@
 author 'JokeDevil'
 description 'FXServer logs to Discord (https://www.jokedevil.com/)'
-version '1.1.6'
+version 'BETA_0.0.1'
 url 'https://jokedevil.com'
 
 -- Config
