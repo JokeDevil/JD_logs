@@ -6,11 +6,6 @@ exports('sanitize', function(string)
     sanitize(string)
 end)
 
-RegisterNetEvent("discordLogs")
-AddEventHandler("discordLogs", function(message, color, channel)
-    discordLog(message, color, channel)
-end)
-
 -- Get exports from server side
 exports('discord', function(message, id, id2, color, channel)
 
@@ -166,13 +161,13 @@ end
 -- Send message when Player connects to the server.
 AddEventHandler("playerConnecting", function(name, setReason, deferrals)
 	local info = GetPlayerDetails(source)
-	discordLog('**' .. sanitize(GetPlayerName(source)) .. '** is connecting to the server.\\n'..info, joinColor, 'joins')
+	SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** is connecting to the server.', joinColor, 'joins',GetPlayerDetails(source))
 end)
 
 -- Send message when Player disconnects from the server
 AddEventHandler('playerDropped', function(reason)
 	local info = GetPlayerDetails(source)
-	discordLog('**' .. sanitize(GetPlayerName(source)) .. '** has left the server. (Reason: ' .. reason .. ')'.._playerID..''.. _postal ..''.. _discordID..''.._steamID..''.._steamURL..''.._license..''.._ip..'', leaveColor, 'leaving')
+	SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** has left the server. (Reason: ' .. reason .. ')', leaveColor, 'leaving', GetPlayerDetails(source))
 end)
 
 -- Send message when Player creates a chat message (Does not show commands)
@@ -190,7 +185,7 @@ AddEventHandler('playerDied',function(id,player,killer,DeathReason, Weapon)
         SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** '..DeathReason..' '.._Weapon, deathColor, 'deaths', GetPlayerDetails(source)) -- sending to deaths channel
 	elseif id == 2 then -- Killed by other player
 	local _killer = GetPlayerDetails(killer)
-	DualPlayerLogs('**' .. GetPlayerName(killer) .. '** '..DeathReason..' ' .. GetPlayerName(source).. ' `('.._Weapon..')`', deathColor, 'deaths', GetPlayerDetails(source), GetPlayerDetails(killer)) -- sending to deaths channel
+		DualPlayerLogs('**' .. GetPlayerName(killer) .. '** '..DeathReason..' ' .. GetPlayerName(source).. ' `('.._Weapon..')`', deathColor, 'deaths', GetPlayerDetails(source), GetPlayerDetails(killer)) -- sending to deaths channel
 	else -- When gets killed by something else
         SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** `died`', deathColor, 'deaths', GetPlayerDetails(source)) -- sending to deaths channel
 	end
