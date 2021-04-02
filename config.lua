@@ -38,4 +38,4 @@ Config.channels = { -- Use channel id's not webhooks.
 
  --Debug shizzels :D
 Config.debug = false
-Config.versionCheck = "BETA_0.0.1"
+Config.versionCheck = "BETA_0.0.2"
