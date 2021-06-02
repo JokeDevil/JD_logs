@@ -137,11 +137,13 @@ Citizen.CreateThread(function()
 
 	while true do
 		Citizen.Wait(0)
-		if IsEntityDead(GetPlayerPed(PlayerId())) then
+		local playerid = PlayerId()
+		local ped = PlayerPedId()
+		if IsEntityDead(GetPlayerPed(playerid)) then
 			Citizen.Wait(0)
-			local PedKiller = GetPedSourceOfDeath(GetPlayerPed(PlayerId()))
+			local PedKiller = GetPedSourceOfDeath(GetPlayerPed(playerid))
 			local killername = GetPlayerName(PedKiller)
-			DeathCauseHash = GetPedCauseOfDeath(GetPlayerPed(PlayerId()))
+			DeathCauseHash = GetPedCauseOfDeath(GetPlayerPed(playerid))
 			Weapon = WeaponNames[tostring(DeathCauseHash)]
 
 			if IsEntityAPed(PedKiller) and IsPedAPlayer(PedKiller) then
@@ -150,7 +152,7 @@ Citizen.CreateThread(function()
 				Killer = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(PedKiller, -1))
 			end
 
-			if (Killer == PlayerId()) then
+			if (Killer == playerid) then
 				DeathReason = 'committed suicide'
 			elseif (Killer == nil) then
 				DeathReason = 'died'
@@ -189,16 +191,16 @@ Citizen.CreateThread(function()
 			end
 
 			if DeathReason == 'committed suicide' or DeathReason == 'died' then
-				TriggerServerEvent('playerDied',1,GetPlayerServerId(PlayerId()),0,DeathReason,Weapon)
+				TriggerServerEvent('playerDied',1,GetPlayerServerId(playerid),0,DeathReason,Weapon)
 			else
-				TriggerServerEvent('playerDied',2,GetPlayerServerId(PlayerId()),GetPlayerServerId(Killer),DeathReason,Weapon)
+				TriggerServerEvent('playerDied',2,GetPlayerServerId(playerid),GetPlayerServerId(Killer),DeathReason,Weapon)
 			end
 			Killer = nil
 			DeathReason = nil
 			DeathCauseHash = nil
 			Weapon = nil
 		end
-		while IsEntityDead(PlayerPedId()) do
+		while IsEntityDead(ped) do
 			Citizen.Wait(0)
 		end
 	end
@@ -208,7 +210,7 @@ Citizen.CreateThread(function()
 
 	while true do
 		Citizen.Wait(0)
-		local playerped = GetPlayerPed(-1)
+		local playerped = PlayerPedId()
 
 		if IsPedShooting(playerped) then
 			TriggerServerEvent('playerShotWeapon', WeaponNames[tostring(GetSelectedPedWeapon(playerped))])
